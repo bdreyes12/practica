@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-console */
 "use strict";
 // Importa el modelo de datos 'Role'
 import Role from "../models/role.model.js";
@@ -17,8 +19,9 @@ async function createRoles() {
     if (count > 0) return;
 
     await Promise.all([
-      new Role({ name: "user" }).save(),
-      new Role({ name: "admin" }).save(),
+      new Role({ name: "medico" }).save(),
+      new Role({ name: "admin_medico" }).save(),
+      new Role({ name: "paciente" }).save(),
     ]);
     console.log("* => Roles creados exitosamente");
   } catch (error) {
@@ -37,23 +40,31 @@ async function createUsers() {
     const count = await User.estimatedDocumentCount();
     if (count > 0) return;
 
-    const admin = await Role.findOne({ name: "admin" });
-    const user = await Role.findOne({ name: "user" });
+    const admin_medico = await Role.findOne({ name: "admin_medico" });
+    const medico = await Role.findOne({ name: "medico" });
+    const paciente = await Role.findOne({ name: "paciente" });
 
     await Promise.all([
       new User({
-        username: "user",
+        username: "paciente",
         email: "user@email.com",
-        rut: "12345678-9",
+        rut: "11111111-1",
         password: await User.encryptPassword("user123"),
-        roles: user._id,
+        roles: paciente._id,
       }).save(),
       new User({
-        username: "admin",
-        email: "admin@email.com",
+        username: "medico",
+        email: "m@email.com",
         rut: "12345678-0",
+        password: await User.encryptPassword("med123"),
+        roles: medico._id,
+      }).save(),
+      new User({
+        username: "admin_medico",
+        email: "ad@email.com",
+        rut: "12345678-1",
         password: await User.encryptPassword("admin123"),
-        roles: admin._id,
+        roles: admin_medico._id,
       }).save(),
     ]);
     console.log("* => Users creados exitosamente");

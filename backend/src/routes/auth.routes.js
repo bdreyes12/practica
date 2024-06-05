@@ -10,6 +10,7 @@ const router = Router();
 
 // Define las rutas para la autenticación
 router.post("/login", authController.login);
+router.post("/loginPaciente", authController.login);
 router.post("/logout", authController.logout);
 router.get("/refresh", authController.refresh);
 

@@ -18,6 +18,11 @@ const authLoginBodySchema = Joi.object({
     "any.required": "La contraseña es obligatoria.",
     "string.base": "La contraseña debe ser de tipo string.",
   }),
+  rut: Joi.string().required().messages({
+    "string.empty": "El rut no puede estar vacío.",
+    "any.required": "El rut es obligatorio.",
+    "string.base": "El rut debe ser de tipo string.",
+  }),
 }).messages({
   "object.unknown": "No se permiten propiedades adicionales.",
 });
